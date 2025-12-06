@@ -1304,7 +1304,109 @@
 <style>
 /* ===== شريط تمرير للقائمة الجانبية كاملة ===== */
 
-/* الحفاظ على الـ flexbox وإضافة التمرير */
+/* 1. جعل القائمة الجانبية قابلة للتمرير */
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 320px;
+    height: 100vh; /* ارتفاع كامل */
+    background: var(--dark);
+    z-index: 1101;
+    transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: -5px 0 30px rgba(0, 0, 0, 0.4);
+    padding: 80px 25px 25px; /* تعديل البادنج */
+    
+    /* هذا هو المفتاح: جعل القائمة كلها قابلة للتمرير */
+    overflow-y: auto;
+    overflow-x: hidden;
+    
+    /* استخدام flexbox لترتيب المحتوى */
+    display: flex;
+    flex-direction: column;
+}
+
+/* 2. إزالة أي حدود للارتفاع من العناصر الداخلية */
+.mobile-menu-header {
+    flex-shrink: 0; /* لا ينكمش */
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+/* 3. السماح للروابط بالتوسع */
+.mobile-nav {
+    flex: 1; /* تأخذ المساحة المتاحة */
+    min-height: 0; /* مهم لتفعيل التمرير داخل flex container */
+    margin: 15px 0;
+}
+
+/* 4. تثبيت وسائل التواصل في الأسفل */
+.mobile-social {
+    flex-shrink: 0; /* لا ينكمش */
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* 5. تخصيص شريط التمرير */
+.mobile-menu::-webkit-scrollbar {
+    width: 6px;
+}
+
+.mobile-menu::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    margin: 10px 0;
+}
+
+.mobile-menu::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, 
+        rgba(76, 201, 240, 0.6), 
+        rgba(67, 97, 238, 0.6));
+    border-radius: 10px;
+}
+
+.mobile-menu::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to bottom, 
+        rgba(76, 201, 240, 0.9), 
+        rgba(67, 97, 238, 0.9));
+}
+
+/* 6. دعم Firefox */
+.mobile-menu {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(76, 201, 240, 0.6) rgba(255, 255, 255, 0.05);
+}
+
+/* 7. التأكد من أن زر الإغلاق ثابت في مكانه */
+.menu-close {
+    position: fixed; /* تغيير من absolute إلى fixed */
+    top: 25px;
+    left: 25px;
+    z-index: 1102; /* أعلى من القائمة */
+}
+
+/* 8. التأكد من أن الروابط تظهر بشكل صحيح */
+.mobile-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 14px 18px;
+    margin-bottom: 8px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: var(--transition);
+}
+
+.mobile-nav-link:hover {
+    background: rgba(76, 201, 240, 0.1);
+    border-color: var(--accent);
+    transform: translateX(-5px);
+}
+إذا كان لا يزال لا يعمل، جرب هذا الحل البديل:
+css
+/* الحل البديل: container داخلي للتمرير */
 .mobile-menu {
     position: fixed;
     top: 0;
@@ -1315,48 +1417,18 @@
     z-index: 1101;
     transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: -5px 0 30px rgba(0, 0, 0, 0.4);
-    display: flex;
-    flex-direction: column;
-    padding: 100px 30px 30px;
+    padding: 80px 0 0; /* بادنج من الأعلى فقط */
     
-    /* التمرير للقائمة كاملة */
+    /* إخفاء التمرير من الحاوية الرئيسية */
+    overflow: hidden;
+}
+
+/* إضافة container داخلي للتمرير */
+.mobile-menu-scroll {
+    height: 100%;
     overflow-y: auto;
     overflow-x: hidden;
-    
-    /* الحفاظ على الارتفاع */
-    max-height: 100vh;
-}
-
-/* إزالة أي overflow من العناصر الداخلية */
-.mobile-nav {
-    /* إزالة هذه الخواص إن وجدت */
-    overflow-y: visible;
-    max-height: none;
-}
-
-/* تخصيص شريط التمرير */
-.mobile-menu::-webkit-scrollbar {
-    width: 6px;
-}
-
-.mobile-menu::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
-}
-
-.mobile-menu::-webkit-scrollbar-thumb {
-    background: rgba(76, 201, 240, 0.5);
-    border-radius: 10px;
-}
-
-.mobile-menu::-webkit-scrollbar-thumb:hover {
-    background: rgba(76, 201, 240, 0.8);
-}
-
-/* للمتصفحات الأخرى */
-.mobile-menu {
-    scrollbar-width: thin;
-    scrollbar-color: rgba(76, 201, 240, 0.5) rgba(255, 255, 255, 0.05);
+    padding: 0 25px 25px;
 }
 </style>
 
@@ -1961,4 +2033,5 @@
 </body>
 
 </html>
+
 
