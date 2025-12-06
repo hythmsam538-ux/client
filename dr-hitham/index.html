@@ -1303,8 +1303,9 @@
 </div>
 <style>
 /* ===== شريط تمرير للقائمة الجانبية كاملة ===== */
+/* ===== شريط تمرير بسيط للقائمة الجانبية كاملة ===== */
 
-/* 1. جعل القائمة الجانبية قابلة للتمرير */
+/* 1. القائمة الجانبية */
 .mobile-menu {
     position: fixed;
     top: 0;
@@ -1315,120 +1316,70 @@
     z-index: 1101;
     transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: -5px 0 30px rgba(0, 0, 0, 0.4);
-    padding: 80px 25px 25px; /* تعديل البادنج */
+    padding: 25px;
     
-    /* هذا هو المفتاح: جعل القائمة كلها قابلة للتمرير */
-    overflow-y: auto;
-    overflow-x: hidden;
+    /* شريط تمرير للقائمة كلها */
+    overflow-y: auto; /* هذا كل المطلوب! */
     
-    /* استخدام flexbox لترتيب المحتوى */
+    /* ترتيب بسيط */
     display: flex;
     flex-direction: column;
+    gap: 20px; /* مسافات بين الأقسام */
 }
 
-/* 2. إزالة أي حدود للارتفاع من العناصر الداخلية */
+/* 2. زر الإغلاق - ثابت في مكانه */
+.menu-close {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    width: 44px;
+    height: 44px;
+    background: linear-gradient(135deg, var(--danger), #ff6b9d);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: white;
+    z-index: 2;
+    box-shadow: 0 5px 15px rgba(247, 37, 133, 0.3);
+}
+
+/* 3. عنوان القائمة */
 .mobile-menu-header {
-    flex-shrink: 0; /* لا ينكمش */
-    margin-bottom: 25px;
-    text-align: center;
-}
-
-/* 3. السماح للروابط بالتوسع */
-.mobile-nav {
-    flex: 1; /* تأخذ المساحة المتاحة */
-    min-height: 0; /* مهم لتفعيل التمرير داخل flex container */
-    margin: 15px 0;
-}
-
-/* 4. تثبيت وسائل التواصل في الأسفل */
-.mobile-social {
-    flex-shrink: 0; /* لا ينكمش */
     margin-top: 20px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* 4. الروابط */
+.mobile-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* 5. وسائل التواصل في الأسفل */
+.mobile-social {
+    margin-top: auto; /* يدفعه للأسفل */
     padding-top: 20px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* 5. تخصيص شريط التمرير */
+/* 6. تخصيص شريط التمرير (اختياري) */
 .mobile-menu::-webkit-scrollbar {
-    width: 6px;
-}
-
-.mobile-menu::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
-    margin: 10px 0;
+    width: 5px;
 }
 
 .mobile-menu::-webkit-scrollbar-thumb {
-    background: linear-gradient(to bottom, 
-        rgba(76, 201, 240, 0.6), 
-        rgba(67, 97, 238, 0.6));
-    border-radius: 10px;
+    background: var(--accent);
+    border-radius: 3px;
 }
 
-.mobile-menu::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(to bottom, 
-        rgba(76, 201, 240, 0.9), 
-        rgba(67, 97, 238, 0.9));
-}
-
-/* 6. دعم Firefox */
+/* 7. دعم Firefox */
 .mobile-menu {
     scrollbar-width: thin;
-    scrollbar-color: rgba(76, 201, 240, 0.6) rgba(255, 255, 255, 0.05);
-}
-
-/* 7. التأكد من أن زر الإغلاق ثابت في مكانه */
-.menu-close {
-    position: fixed; /* تغيير من absolute إلى fixed */
-    top: 25px;
-    left: 25px;
-    z-index: 1102; /* أعلى من القائمة */
-}
-
-/* 8. التأكد من أن الروابط تظهر بشكل صحيح */
-.mobile-nav-link {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 14px 18px;
-    margin-bottom: 8px;
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: var(--transition);
-}
-
-.mobile-nav-link:hover {
-    background: rgba(76, 201, 240, 0.1);
-    border-color: var(--accent);
-    transform: translateX(-5px);
-}
-إذا كان لا يزال لا يعمل، جرب هذا الحل البديل:
-css
-/* الحل البديل: container داخلي للتمرير */
-.mobile-menu {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    width: 320px;
-    height: 100vh;
-    background: var(--dark);
-    z-index: 1101;
-    transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: -5px 0 30px rgba(0, 0, 0, 0.4);
-    padding: 80px 0 0; /* بادنج من الأعلى فقط */
-    
-    /* إخفاء التمرير من الحاوية الرئيسية */
-    overflow: hidden;
-}
-
-/* إضافة container داخلي للتمرير */
-.mobile-menu-scroll {
-    height: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: 0 25px 25px;
+    scrollbar-color: var(--accent) transparent;
 }
 </style>
 
@@ -2033,5 +1984,6 @@ css
 </body>
 
 </html>
+
 
 
