@@ -1250,7 +1250,7 @@
 
     <!-- عنوان القائمة -->
     <div class="mobile-menu-header">
-        <img src="loweb.png" alt="مُـخـتـلـف">
+        <img src="logo-removebg-preview.png" alt="مُـخـتـلـف">
         <h3>مُـخـتـلـف | هويتك الذكية</h3>
     </div>
 
@@ -1302,36 +1302,61 @@
     </div>
 </div>
 <style>
-    .mobile-nav {
-    flex: 1;
+/* ===== شريط تمرير للقائمة الجانبية كاملة ===== */
+
+/* الحفاظ على الـ flexbox وإضافة التمرير */
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 320px;
+    height: 100vh;
+    background: var(--dark);
+    z-index: 1101;
+    transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: -5px 0 30px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    padding: 100px 30px 30px;
+    
+    /* التمرير للقائمة كاملة */
     overflow-y: auto;
     overflow-x: hidden;
-    max-height: calc(100vh - 280px);
-    padding-left: 5px;
-    margin: 10px 0;
-    /* إخفاء الشريط */
-    scrollbar-width: thin;
-    scrollbar-color: transparent transparent;
+    
+    /* الحفاظ على الارتفاع */
+    max-height: 100vh;
 }
 
-/* إظهار الشريط عند التحويم فقط */
-.mobile-nav:hover {
-    scrollbar-color: rgba(76, 201, 240, 0.3) rgba(255, 255, 255, 0.05);
+/* إزالة أي overflow من العناصر الداخلية */
+.mobile-nav {
+    /* إزالة هذه الخواص إن وجدت */
+    overflow-y: visible;
+    max-height: none;
 }
 
-/* للمتصفحات التي تدعم webkit */
-.mobile-nav::-webkit-scrollbar {
+/* تخصيص شريط التمرير */
+.mobile-menu::-webkit-scrollbar {
     width: 6px;
-    background: transparent;
 }
 
-.mobile-nav:hover::-webkit-scrollbar-track {
+.mobile-menu::-webkit-scrollbar-track {
     background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
 }
 
-.mobile-nav:hover::-webkit-scrollbar-thumb {
-    background: rgba(76, 201, 240, 0.3);
-    border-radius: 3px;
+.mobile-menu::-webkit-scrollbar-thumb {
+    background: rgba(76, 201, 240, 0.5);
+    border-radius: 10px;
+}
+
+.mobile-menu::-webkit-scrollbar-thumb:hover {
+    background: rgba(76, 201, 240, 0.8);
+}
+
+/* للمتصفحات الأخرى */
+.mobile-menu {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(76, 201, 240, 0.5) rgba(255, 255, 255, 0.05);
 }
 </style>
 
@@ -1936,3 +1961,4 @@
 </body>
 
 </html>
+
